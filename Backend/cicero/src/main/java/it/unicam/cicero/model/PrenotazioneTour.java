@@ -1,25 +1,24 @@
 package it.unicam.cicero.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
 
 @Getter
-public class Prenotazione {
+/**
+ * Classe che permette di creare una prenotazione a un tour. Una prneotazione ha: un id, un astatoPrenotazione (Variabile boolean che indica se la prenotazione può essere pagata o meno (si è raggiunto il numero minimo di
+ *     partecipanti)), numero dei posti che si vogliono prenotare con la prenotazione, il tour che si vuole prenotare e il turista che fa la prenotazione.
+ */
+public class PrenotazioneTour {
 
     private String id;
-    /*Variabile boolean che indica se la prenotazione può essere pagata o meno (si è raggiunto il numero minimo di
-    partecipanti).*/
     private boolean statoPrenotazione;
     private int numeroPostiDaPrenotare;
     private TourCalendario tourCalendario;
     private Turista turista;
 
-    public Prenotazione(TourCalendario tourCalendario, Turista turista) {
+    public PrenotazioneTour(TourCalendario tourCalendario, Turista turista) {
         this.id = id;
         this.numeroPostiDaPrenotare = 1;
         this.tourCalendario = tourCalendario;
@@ -28,7 +27,9 @@ public class Prenotazione {
 
 
     /**
-     * @param statoPrenotazione
+     * Metodo che modifica lo sttao di una prenotazione.
+     *
+     * @param statoPrenotazione che si vuole mettere come valore nuovo.
      */
     public void setStatoPrenotazione(boolean statoPrenotazione) {
         this.statoPrenotazione = statoPrenotazione;
@@ -36,8 +37,9 @@ public class Prenotazione {
 
 
     /**
+     * Metodo che modifca il numero di posti che si vuole prenotare
      *
-     * @param numeroPostiDaPrenotare
+     * @param numeroPostiDaPrenotare che il turista vuole prenotare
      */
     public void setNumeroPostiDaPrenotare ( int numeroPostiDaPrenotare){
         this.numeroPostiDaPrenotare = numeroPostiDaPrenotare;
@@ -45,8 +47,9 @@ public class Prenotazione {
 
 
         /**
+         * Metodo che diminuisce il numero di posti disponibili in un tour dopo che avviene una prneotazione
          *
-         * @param tourCalendario
+         * @param tourCalendario tour di cui si vogliono modificare i posti disponibili
          */
         public void decreaseAvailablePlaces (TourCalendario tourCalendario){
             int posti = tourCalendario.getPostiDisponibili() - numeroPostiDaPrenotare;
@@ -59,13 +62,14 @@ public class Prenotazione {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Prenotazione that = (Prenotazione) o;
+        PrenotazioneTour that = (PrenotazioneTour) o;
         return statoPrenotazione == that.statoPrenotazione && numeroPostiDaPrenotare == that.numeroPostiDaPrenotare && Objects.equals(id, that.id) && Objects.equals(tourCalendario, that.tourCalendario);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+
+            return Objects.hash(id);
     }
 
 

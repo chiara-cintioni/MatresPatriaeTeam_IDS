@@ -20,10 +20,11 @@ public class GestioneCalendario {
 
 
     /**
+     *Metodo che modifica il calendario del cicerone
      *
-     * @param giorno
-     * @param mese
-     * @param tour
+     * @param giorno del tour che si vuole modificare
+     * @param mese del tour che si vuole modificare
+     * @param tour che si vuole inserire in quel giorno e quel mese
      */
     public void modificaCalendario (int giorno, int mese, Tour tour) {
         if(this.calendario[giorno][mese] != null){
@@ -34,9 +35,10 @@ public class GestioneCalendario {
     }
 
     /**
+     *Metodo che eimina un tour dal calendario del cicerone
      *
-     * @param giorno
-     * @param mese
+     * @param giorno del tour che si vuole eliminare
+     * @param mese del tour che si vuoel eliminare
      */
     public void eliminaTourDalCalendario(int giorno, int mese){
         if(this.calendario[giorno][mese] == null){
@@ -46,10 +48,12 @@ public class GestioneCalendario {
     }
 
     /**
+     *Metodo che ritorna un tour inserito nel calendario del cicerone
      *
-     * @param giorno
-     * @param mese
-     * @return
+     * @param giorno del calendario del tour che si vuole ritornare
+     * @param mese del calendario del tour che si vuole ritornare
+     *
+     * @return il tour inserito in quella specifica data
      */
     public TourCalendario restituisciTour (int giorno, int mese) {
         return this.calendario[giorno][mese];

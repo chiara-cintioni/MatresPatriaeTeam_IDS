@@ -7,6 +7,11 @@ import java.util.HashSet;
 import lombok.Data;
 
 @Data
+
+/**
+ * Classe che crea un cicerone. Il cicerone ha: un nome, un cognome, un email, un oggetto calendario della classe GestioneCalendario 
+ * e un elenco di tour fatti dal cicerone.
+ */
 public class Cicerone {
 
     private String nome;
@@ -25,10 +30,11 @@ public class Cicerone {
     }
 
     /**
-     *
-     * @param tour
-     * @param giorno
-     * @param mese
+     *Metodo che aggiunge un tour del cicerone in una specifica data
+     * 
+     * @param tour che il cicerone vuole inserire
+     * @param giorno in cui il cicerone vuole inserire il tour
+     * @param mese in cui il ciceroen vuole inserire il tour
      */
     public void addDisponibilita (Tour tour, int giorno, int mese) {
         if (giorno > 31 || giorno < 1) throw new IllegalArgumentException("Il giorno non esiste");
@@ -62,9 +68,10 @@ public class Cicerone {
     }
 
     /**
-     *
-     * @param anno
-     * @return
+     *Metodo che controlla se l'anno e' bisestile oppure no
+     * 
+     * @param anno che si vuole controllare
+     * @return true se l'anno e' bisestile, false atrimenti
      */
     boolean annoBisestile(int anno){
         if(anno > 1584 && (anno%400==0 || (anno%4==0 && anno%100!=0))){
@@ -74,20 +81,22 @@ public class Cicerone {
     }
 
     /**
-     *
-     * @param tour
+     *Metodo che rimuove un tour dal calendario. Viene eliminato solo il singolo tour in una specifica data, e non il tour dalla lista dei tour del cicerone
+     * 
+     * @param tour che si vuoel eliminare
      */
     public void removeDisponibilita (TourCalendario tour) {
         this.calendario.eliminaTourDalCalendario(tour.getGiorno(), tour.getMese());
     }
 
     /**
-     *
-     * @param nome
-     * @param numeroMin
-     * @param numeroMax
-     * @param prezzo
-     * @param descrizione
+     *Metodo che crea un tour 
+     * 
+     * @param nome del tour che si vuoel creare
+     * @param numeroMin di partecipanti al tour che il cicerone sta creando
+     * @param numeroMax di partecipanti al tour che il cicerone sta creando
+     * @param prezzo del tour che il cicerone sta creando
+     * @param descrizione del tour che il cicerone sta creando
      */
     public void creaTour(String nome, int numeroMin, int numeroMax, double prezzo, String descrizione){
         Tour tour = new Tour(nome, numeroMin, numeroMax, prezzo, descrizione);
@@ -95,8 +104,9 @@ public class Cicerone {
     }
 
     /**
+     *Metodo che elimina un tour definitivamente dalla lista dei tour fatti dal singolo cicerone. Il tour è eliminato anche dal calendario.
      *
-     * @param tour
+     * @param tour che si vuole eliminare definitivamente
      */
     public void eliminaTourDefinitivamente(Tour tour) {
         this.elencoTour.remove(tour);
