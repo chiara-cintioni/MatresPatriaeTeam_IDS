@@ -17,7 +17,31 @@ public class PagamentoTour {
     private double totale;
     private Date data;
     private Date ora;
+    private PrenotazioneTour prenotazione;
 
+    public PagamentoTour(PrenotazioneTour prenotazione) {
+        this.prenotazione = prenotazione;
+    }
+
+    public String getNumeroIdentificiativo() {
+        return numeroIdentificiativo;
+    }
+
+    public double getTotale() {
+        return totale;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public Date getOra() {
+        return ora;
+    }
+
+    public PrenotazioneTour getPrenotazione() {
+        return prenotazione;
+    }
 
 
 }

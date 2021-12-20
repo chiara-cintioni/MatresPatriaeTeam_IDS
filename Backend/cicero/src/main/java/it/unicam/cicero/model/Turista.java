@@ -26,13 +26,19 @@ public class Turista {
 
 
     /**
-     * Metodo che permette al turista di eseguire una prenotazione
+     * Metodo che permette al turista di eseguire una prenotazione.
      *
      * @param tourDaPrenotare tour che il turista vuole prenotare
+     * @param postiDaPrenotare il numero di posti che il turista vuole prenotare.
+     * @return true se la prenotazione è avvenuta, false altrimenti.
      */
-    public void eseguiPrenotazione (TourCalendario tourDaPrenotare) {
-        PrenotazioneTour prenotazione = new PrenotazioneTour (tourDaPrenotare, this);
-        tourDaPrenotare.getElencoPrenotazioni().add(prenotazione);
+    public boolean eseguiPrenotazione (TourCalendario tourDaPrenotare, int postiDaPrenotare) {
+        if(postiDaPrenotare<=tourDaPrenotare.getPostiDisponibili()){
+            PrenotazioneTour prenotazione = new PrenotazioneTour (tourDaPrenotare, this, postiDaPrenotare);
+            tourDaPrenotare.getElencoPrenotazioni().add(prenotazione);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -40,11 +46,12 @@ public class Turista {
      *
      * @param prenotazione che il turista vuole annullare
      */
-    public void annullaPrenotazione (PrenotazioneTour prenotazione) {
+    public boolean annullaPrenotazione (PrenotazioneTour prenotazione) {
         prenotazione.getTourCalendario().getElencoPrenotazioni().remove(prenotazione);
         int totaleNuoviPostiDisponibili = prenotazione.getNumeroPostiDaPrenotare() + prenotazione.getTourCalendario().getPostiDisponibili();
         prenotazione.getTourCalendario().setPostiDisponibili(totaleNuoviPostiDisponibili);
         int postiPrenotati = prenotazione.getTourCalendario().getTotalePostiPrenotati() - prenotazione.getNumeroPostiDaPrenotare();
         prenotazione.getTourCalendario().setTotalePostiPrenotati(postiPrenotati);
+        return true;
     }
 }

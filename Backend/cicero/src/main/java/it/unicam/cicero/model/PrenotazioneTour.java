@@ -12,15 +12,17 @@ import java.util.Objects;
  */
 public class PrenotazioneTour {
 
-    private String id;
+    private final int id;
+    private static int contatoreTour = 0;
     private boolean statoPrenotazione;
     private int numeroPostiDaPrenotare;
     private TourCalendario tourCalendario;
     private Turista turista;
 
-    public PrenotazioneTour(TourCalendario tourCalendario, Turista turista) {
-        this.id = id;
-        this.numeroPostiDaPrenotare = 1;
+    public PrenotazioneTour(TourCalendario tourCalendario, Turista turista, int numeroPostiDaPrenotare) {
+        contatoreTour++;
+        this.id = contatoreTour;
+        this.numeroPostiDaPrenotare = numeroPostiDaPrenotare;
         this.tourCalendario = tourCalendario;
         this.turista = turista;
     }
@@ -37,26 +39,16 @@ public class PrenotazioneTour {
 
 
     /**
-     * Metodo che modifca il numero di posti che si vuole prenotare
+     * Metodo che diminuisce il numero di posti disponibili in un tour dopo che avviene una prneotazione
      *
-     * @param numeroPostiDaPrenotare che il turista vuole prenotare
+     * @param tourCalendario tour di cui si vogliono modificare i posti disponibili
      */
-    public void setNumeroPostiDaPrenotare ( int numeroPostiDaPrenotare){
-        this.numeroPostiDaPrenotare = numeroPostiDaPrenotare;
+    public void decreaseAvailablePlaces (TourCalendario tourCalendario){
+        int posti = tourCalendario.getPostiDisponibili() - numeroPostiDaPrenotare;
+        tourCalendario.setPostiDisponibili(posti);
+        int postiPrenotati = tourCalendario.getTotalePostiPrenotati() + numeroPostiDaPrenotare;
+        tourCalendario.setTotalePostiPrenotati(postiPrenotati);
     }
-
-
-        /**
-         * Metodo che diminuisce il numero di posti disponibili in un tour dopo che avviene una prneotazione
-         *
-         * @param tourCalendario tour di cui si vogliono modificare i posti disponibili
-         */
-        public void decreaseAvailablePlaces (TourCalendario tourCalendario){
-            int posti = tourCalendario.getPostiDisponibili() - numeroPostiDaPrenotare;
-            tourCalendario.setPostiDisponibili(posti);
-            int postiPrenotati = tourCalendario.getTotalePostiPrenotati() + numeroPostiDaPrenotare;
-            tourCalendario.setTotalePostiPrenotati(postiPrenotati);
-        }
 
     @Override
     public boolean equals(Object o) {
@@ -66,9 +58,19 @@ public class PrenotazioneTour {
         return statoPrenotazione == that.statoPrenotazione && numeroPostiDaPrenotare == that.numeroPostiDaPrenotare && Objects.equals(id, that.id) && Objects.equals(tourCalendario, that.tourCalendario);
     }
 
+    /**
+     * Metodo che elimina una prenotazione effettuata.
+     * @return true se la prenotazione viene eliminata correttamente.
+     */
+    public boolean eliminaPrenotazione(){
+        tourCalendario.getElencoPrenotazioni().remove(this);
+        this.tourCalendario = null;
+        this.turista = null;
+        return true;
+    }
+
     @Override
     public int hashCode() {
-
             return Objects.hash(id);
     }
 

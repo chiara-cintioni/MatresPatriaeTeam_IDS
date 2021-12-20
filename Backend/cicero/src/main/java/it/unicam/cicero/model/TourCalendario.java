@@ -6,7 +6,7 @@ import java.util.HashSet;
 /*
 * Classe che implementa un oggetto di tipo TourCalendario che deve essere inserito nella matrice gestioneCalendario. L'oggetto di questa classe e' un tour che
 * specifica la data (giorno e mese), il nuemro di psoti disponibili, il totale di posti prenotati, se e' possibile pagare il tour oppure no
-* e l'elenco delle prenotazioni fatte in quel tour (di quel specifico tour).
+* e l'elenco delle prenotazioni fatte in quel tour (di quello specifico tour).
 * Questa classe serve per gestire ogni tour in modo autonomo (soprattutto per quanto riguarda le prenotazioni).
 * */
 
@@ -18,7 +18,7 @@ public class TourCalendario {
     private int postiDisponibili;
     private int totalePostiPrenotati;
     private boolean possibilitaDiPagare;
-    private HashSet elencoPrenotazioni;
+    private HashSet<PrenotazioneTour> elencoPrenotazioni;
 
     public TourCalendario(Tour tour, int giorno, int mese) {
         this.tour = tour;
@@ -26,7 +26,7 @@ public class TourCalendario {
         this.mese = mese;
         this.postiDisponibili = tour.getNumeroMassimo();
         this.totalePostiPrenotati = 0;
-        this.elencoPrenotazioni = new HashSet<>();
+        this.elencoPrenotazioni = new HashSet<PrenotazioneTour>();
     }
 
     /**

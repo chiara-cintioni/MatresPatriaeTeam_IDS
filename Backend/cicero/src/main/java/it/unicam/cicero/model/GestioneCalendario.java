@@ -15,7 +15,6 @@ public class GestioneCalendario {
 
     public GestioneCalendario() {
         this.calendario = new TourCalendario[31][12];
-
     }
 
 
@@ -48,7 +47,7 @@ public class GestioneCalendario {
     }
 
     /**
-     *Metodo che ritorna un tour inserito nel calendario del cicerone
+     *Metodo che ritorna un tour inserito nel calendario del Cicerone
      *
      * @param giorno del calendario del tour che si vuole ritornare
      * @param mese del calendario del tour che si vuole ritornare

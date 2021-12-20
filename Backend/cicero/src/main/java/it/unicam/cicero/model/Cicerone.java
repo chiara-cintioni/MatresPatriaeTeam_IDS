@@ -3,6 +3,8 @@ import java.lang.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import lombok.Data;
 
@@ -63,8 +65,7 @@ public class Cicerone {
 
             }
         }
-
-    this.calendario.modificaCalendario(giorno, mese, tour);
+        this.calendario.modificaCalendario(giorno, mese, tour);
     }
 
     /**
@@ -73,7 +74,7 @@ public class Cicerone {
      * @param anno che si vuole controllare
      * @return true se l'anno e' bisestile, false atrimenti
      */
-    boolean annoBisestile(int anno){
+    private boolean annoBisestile(int anno){
         if(anno > 1584 && (anno%400==0 || (anno%4==0 && anno%100!=0))){
             return true;
         }
@@ -85,22 +86,48 @@ public class Cicerone {
      * 
      * @param tour che si vuoel eliminare
      */
-    public void removeDisponibilita (TourCalendario tour) {
+    public boolean removeDisponibilita (TourCalendario tour) {
+        if (this.calendario.restituisciTour(tour.getGiorno(),tour.getMese() ) == null) throw new NullPointerException("In questa data non è presente alcun tour");
+        HashSet<PrenotazioneTour> elencoPrenotazioni = tour.getElencoPrenotazioni();
+        for (PrenotazioneTour p : elencoPrenotazioni) {
+            Turista turista = p.getTurista();
+            p.eliminaPrenotazione();
+            System.out.println("Il tour non è piu' disponibile. " +
+                    "La sua prenotazione e' gia' stata annullata. Ci scusiamo per l'inconvenente.");
+        }
         this.calendario.eliminaTourDalCalendario(tour.getGiorno(), tour.getMese());
+        return true;
     }
 
     /**
      *Metodo che crea un tour 
      * 
-     * @param nome del tour che si vuoel creare
+     * @param nome del tour che si vuole creare
      * @param numeroMin di partecipanti al tour che il cicerone sta creando
      * @param numeroMax di partecipanti al tour che il cicerone sta creando
      * @param prezzo del tour che il cicerone sta creando
      * @param descrizione del tour che il cicerone sta creando
      */
-    public void creaTour(String nome, int numeroMin, int numeroMax, double prezzo, String descrizione){
+    public boolean creaTour(String nome, int numeroMin, int numeroMax, double prezzo, String descrizione){
         Tour tour = new Tour(nome, numeroMin, numeroMax, prezzo, descrizione);
+        while (controlloStringa(nome)) {
+            System.out.println ("Formato del nome non valido. Può contenere solo lettere dell'alfabeto");
+            Scanner sc = new Scanner(System.in);
+            setNome(sc.next());
+            sc.close();
+        }
         this.elencoTour.add(tour);
+        return true;
+    }
+
+    /**
+     * Metodo che controlla il contenuto di una stringa
+     *
+     * @param stringa che deve essere controllata
+     * @return true se la stringa contiene uno dei caratteri speciali, false altrimenti.
+     */
+    private boolean controlloStringa(String stringa){
+        return Pattern.matches("^[a-zA-Z0-9-!?&%$><.;,_*+§#@*|(){}]+$",stringa);
     }
 
     /**
@@ -114,12 +141,19 @@ public class Cicerone {
             for (int j = 0; j< 12; j++){
                 TourCalendario tourCalendario = this.calendario.restituisciTour(i,j);
                 if (tourCalendario.getTour().getId() == tour.getId()) {
-                    this.calendario.eliminaTourDalCalendario(i,j);
+                    HashSet<PrenotazioneTour> elencoPrenotazioni = tourCalendario.getElencoPrenotazioni();
+                   for (PrenotazioneTour p : elencoPrenotazioni) {
+                       Turista turista = p.getTurista();
+                       p.eliminaPrenotazione();
+                       System.out.println("Il tour non è piu' disponibile. " +
+                               "La sua prenotazione e' gia' stata annullata. Ci scusiamo per l'inconvenente.");
+                       this.calendario.eliminaTourDalCalendario(i, j);
+                   }
                 }
             }
         }
-
     }
+
 
 }
 
