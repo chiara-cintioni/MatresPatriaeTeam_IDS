@@ -19,11 +19,13 @@ url: jdbc:postgresql://localhost:5432/Cicero
 
 NB: SE NON SI UTILIZZA POSTGRES, CAMBIARE I VALORI RIPORTATI SOPRA SUL CODICE (CAMBIARE I VALORI PER OGNI VARIABILE DELLE CLASSI DBManager ).
  LE VARIABILI DI ISTANZA SONO SCRITTE NEL SEGUENTE MODO: 
- 
- private static DBManagerConfronti dbManagerConfronti;
+  
     private final static String url = "jdbc:postgresql://localhost:5432/Cicero";
+    
     private final static String user = "postgres";
+    
     private final static String password = "cicero";
+    
     private final static String driver = "org.postgresql.Driver";
 
 COPIARE NEL DATABASE IL CONTENUTO DEL FILE Inizializzazione Database.
