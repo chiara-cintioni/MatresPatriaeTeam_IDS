@@ -5,6 +5,8 @@ ISTRUZIONI PER CREARE IL DATABASE (POSTGRES)
 CREARE IN POSTGRES UN DATABASE DI NOME Cicero.
 DETTAGLI DATABASE (SONO SCRITTI ANCHE NELLE CLASSI DEI DBManager come variabili di istanza della classe):
 
+Nome database: Cicero
+
 Host: localhost
 
 Port: 5432
